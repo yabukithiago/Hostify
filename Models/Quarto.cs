@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace GestaoAlojamentoAPI.Models
+namespace Hostify.Models
 {
 	public class Quarto
 	{

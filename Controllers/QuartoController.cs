@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hostify.Data;
+using Hostify.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Controllers
+namespace Hostify.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("api/[controller]")]
 	public class QuartoController : ControllerBase
 	{
 		private readonly AppDbContext _context;
@@ -13,33 +16,33 @@ namespace WebApplication1.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Quarto>>> GetAcomodacoes()
+		public async Task<ActionResult<IEnumerable<Quarto>>> GetQuarto()
 		{
-			return await _context.Acomodacoes.ToListAsync();
+			return await _context.Quartos.ToListAsync();
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<Quarto>> PostAcomodacao(Quarto acomodacao)
+		public async Task<ActionResult<Quarto>> PostQuarto(Quarto quarto)
 		{
-			_context.Acomodacoes.Add(acomodacao);
+			_context.Quartos.Add(quarto);
 			await _context.SaveChangesAsync();
 
-			return CreatedAtAction(nameof(GetAcomodacoes), new { id = acomodacao.Id }, acomodacao);
+			return CreatedAtAction(nameof(GetQuarto), new { id = quarto.IdQuarto }, quarto);
 		}
 
 		[HttpDelete]	
-		public async Task<ActionResult<Quarto>> DeleteAcomodacao(int id)
+		public async Task<ActionResult<Quarto>> DeleteQuarto(int id)
 		{
-			var acomodacao = await _context.Acomodacoes.FindAsync(id);
-			if (acomodacao == null)
+			var quarto = await _context.Quartos.FindAsync(id);
+			if (quarto == null)
 			{
 				return NotFound();
 			}
 
-			_context.Acomodacoes.Remove(acomodacao);
+			_context.Quartos.Remove(quarto);
 			await _context.SaveChangesAsync();
 
-			return acomodacao;
+			return quarto;
 		}
 	}
 }
