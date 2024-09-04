@@ -18,13 +18,13 @@ namespace Hostify.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Quarto>>> GetQuarto()
 		{
-			return await _context.Quartos.ToListAsync();
+			return await _context.Quarto.ToListAsync();
 		}
 
 		[HttpPost]
 		public async Task<ActionResult<Quarto>> PostQuarto(Quarto quarto)
 		{
-			_context.Quartos.Add(quarto);
+			_context.Quarto.Add(quarto);
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction(nameof(GetQuarto), new { id = quarto.IdQuarto }, quarto);
@@ -33,13 +33,13 @@ namespace Hostify.Controllers
 		[HttpDelete]	
 		public async Task<ActionResult<Quarto>> DeleteQuarto(int id)
 		{
-			var quarto = await _context.Quartos.FindAsync(id);
+			var quarto = await _context.Quarto.FindAsync(id);
 			if (quarto == null)
 			{
 				return NotFound();
 			}
 
-			_context.Quartos.Remove(quarto);
+			_context.Quarto.Remove(quarto);
 			await _context.SaveChangesAsync();
 
 			return quarto;

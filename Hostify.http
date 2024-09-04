@@ -1,6 +1,6 @@
-@WebApplication1_HostAddress = http://localhost:5083
+@Hostify_HostAddress = http://localhost:5083
 
-GET {{WebApplication1_HostAddress}}/weatherforecast/
+GET {{Hostify_HostAddress}}/Hostify/
 Accept: application/json
 
 ###
