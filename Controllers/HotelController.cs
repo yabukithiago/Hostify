@@ -10,6 +10,7 @@ namespace Hostify.Controllers
 	public class HotelController : ControllerBase
 	{
 		private readonly AppDbContext _context;
+
 		public HotelController(AppDbContext _context)
 		{
 			this._context = _context;
@@ -21,6 +22,18 @@ namespace Hostify.Controllers
 			return await _context.Hotel.ToListAsync();
 		}
 
+		[HttpGet("{id}")]
+		public async Task<ActionResult<Hotel>> GetHotel(int id)
+		{
+			var hotel = await _context.Hotel.FindAsync(id);
+			if (hotel == null)
+			{
+				return NotFound();
+			}
+
+			return hotel;
+		}
+
 		[HttpPost]
 		public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
 		{
@@ -30,7 +43,36 @@ namespace Hostify.Controllers
 			return CreatedAtAction(nameof(GetHotel), new { id = hotel.IdHotel }, hotel);
 		}
 
-		[HttpDelete]
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+		{
+			if (id != hotel.IdHotel)
+			{
+				return BadRequest();
+			}
+
+			_context.Entry(hotel).State = EntityState.Modified;
+
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!_context.Hotel.Any(e => e.IdHotel == id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
+
+			return NoContent();
+		}
+
+		[HttpDelete("{id}")]
 		public async Task<ActionResult<Hotel>> DeleteHotel(int id)
 		{
 			var hotel = await _context.Hotel.FindAsync(id);

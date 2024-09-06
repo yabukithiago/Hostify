@@ -7,35 +7,27 @@ namespace Hostify
 	{
 		public static void Main(string[] args)
 		{
-			var builder = WebApplication.CreateBuilder(args); 
-			builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+			var builder = WebApplication.CreateBuilder(args);
 
+			builder.Services.AddDbContext<AppDbContext>(options =>
+				options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+			builder.Services.AddControllers();
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
-			builder.Services.AddRazorPages();
 
 			var app = builder.Build();
 
-			if (!app.Environment.IsDevelopment())
-			{
-				app.UseExceptionHandler("/Error");
-				app.UseHsts();
-			}
-			else
+			if (app.Environment.IsDevelopment())
 			{
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
 
 			app.UseHttpsRedirection();
-			app.UseStaticFiles();
-
-			app.UseRouting();
-
 			app.UseAuthorization();
 
-			app.MapRazorPages();
+			app.MapControllers();
 
 			app.Run();
 		}

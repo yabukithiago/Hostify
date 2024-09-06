@@ -10,6 +10,7 @@ namespace Hostify.Controllers
 	public class QuartoController : ControllerBase
 	{
 		private readonly AppDbContext _context;
+
 		public QuartoController(AppDbContext _context)
 		{
 			this._context = _context;
@@ -21,8 +22,20 @@ namespace Hostify.Controllers
 			return await _context.Quarto.ToListAsync();
 		}
 
+		[HttpGet("{id}")]
+		public async Task<ActionResult<Quarto>> GetQuarto(int id)
+		{
+			var quarto = await _context.Quarto.FindAsync(id);
+			if (quarto == null)
+			{
+				return NotFound();
+			}
+
+			return quarto;
+		}
+
 		[HttpPost]
-		public async Task<ActionResult<Quarto>> PostQuarto(Quarto quarto)
+		public async Task<ActionResult<Hotel>> PostQuarto(Quarto quarto)
 		{
 			_context.Quarto.Add(quarto);
 			await _context.SaveChangesAsync();
@@ -30,7 +43,36 @@ namespace Hostify.Controllers
 			return CreatedAtAction(nameof(GetQuarto), new { id = quarto.IdQuarto }, quarto);
 		}
 
-		[HttpDelete]	
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutQuarto(int id, Quarto quarto)
+		{
+			if (id != quarto.IdQuarto)
+			{
+				return BadRequest();
+			}
+
+			_context.Entry(quarto).State = EntityState.Modified;
+
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!_context.Quarto.Any(e => e.IdQuarto == id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
+
+			return NoContent();
+		}
+
+		[HttpDelete("{id}")]
 		public async Task<ActionResult<Quarto>> DeleteQuarto(int id)
 		{
 			var quarto = await _context.Quarto.FindAsync(id);
