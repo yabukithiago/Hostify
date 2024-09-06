@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Hostify.Models
 {
-    public class Hospede : Utilizador {
+    public class Hospede : Utilizador
+	{ 
         [Key]
 		public int IdHospede { get; set; }
         [Required]

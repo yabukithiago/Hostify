@@ -13,5 +13,7 @@ namespace Hostify.Models
 		public string PasswordUtilizador { get; set; }
 		[Required]
 		public string NameUtilizador { get; set; }
+		[Required]
+		public string TypeUtilizador { get; set; }
 	}
 }

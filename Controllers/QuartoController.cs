@@ -16,12 +16,14 @@ namespace Hostify.Controllers
 			this._context = _context;
 		}
 
+		//Lista todos os quartos
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Quarto>>> GetQuarto()
 		{
 			return await _context.Quarto.ToListAsync();
 		}
 
+		//Lista um quarto especifico
 		[HttpGet("{id}")]
 		public async Task<ActionResult<Quarto>> GetQuarto(int id)
 		{
@@ -34,6 +36,7 @@ namespace Hostify.Controllers
 			return quarto;
 		}
 
+		//Cria um quarto
 		[HttpPost]
 		public async Task<ActionResult<Hotel>> PostQuarto(Quarto quarto)
 		{
@@ -43,6 +46,7 @@ namespace Hostify.Controllers
 			return CreatedAtAction(nameof(GetQuarto), new { id = quarto.IdQuarto }, quarto);
 		}
 
+		//Atualiza um quarto
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutQuarto(int id, Quarto quarto)
 		{
@@ -72,6 +76,7 @@ namespace Hostify.Controllers
 			return NoContent();
 		}
 
+		//Deleta um quarto
 		[HttpDelete("{id}")]
 		public async Task<ActionResult<Quarto>> DeleteQuarto(int id)
 		{
