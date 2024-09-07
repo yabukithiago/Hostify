@@ -101,11 +101,6 @@ namespace Hostify.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdUtilizador"));
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("character varying(13)");
-
                     b.Property<string>("NameUtilizador")
                         .IsRequired()
                         .HasColumnType("text");
@@ -116,7 +111,8 @@ namespace Hostify.Migrations
 
                     b.Property<string>("TypeUtilizador")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)");
 
                     b.Property<string>("UsernameUtilizador")
                         .IsRequired()
@@ -126,7 +122,7 @@ namespace Hostify.Migrations
 
                     b.ToTable("Utilizador");
 
-                    b.HasDiscriminator().HasValue("Utilizador");
+                    b.HasDiscriminator<string>("TypeUtilizador").HasValue("Utilizador");
 
                     b.UseTphMappingStrategy();
                 });
