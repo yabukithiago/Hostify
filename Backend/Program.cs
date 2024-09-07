@@ -1,5 +1,8 @@
 ﻿using Hostify.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Hostify
 {
@@ -11,6 +14,25 @@ namespace Hostify
 
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+			var key = Encoding.ASCII.GetBytes("SuaChaveSecretaAqui"); // Azure Key Vault ou outro local seguro.
+			builder.Services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
+			.AddJwtBearer(options =>
+			{
+				options.RequireHttpsMetadata = false;
+				options.SaveToken = true;
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(key),
+					ValidateIssuer = false,
+					ValidateAudience = false
+				};
+			});
 
 			builder.Services.AddControllers();
 			builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +47,8 @@ namespace Hostify
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.MapControllers();
