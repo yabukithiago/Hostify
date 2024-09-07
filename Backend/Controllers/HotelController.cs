@@ -40,13 +40,13 @@ namespace Hostify.Controllers
 			_context.Hotel.Add(hotel);
 			await _context.SaveChangesAsync();
 
-			return CreatedAtAction(nameof(GetHotel), new { id = hotel.IdHotel }, hotel);
+			return CreatedAtAction(nameof(GetHotel), new { id = hotel.IdUtilizador }, hotel);
 		}
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutHotel(int id, Hotel hotel)
 		{
-			if (id != hotel.IdHotel)
+			if (id != hotel.IdUtilizador)
 			{
 				return BadRequest();
 			}
@@ -59,7 +59,7 @@ namespace Hostify.Controllers
 			}
 			catch (DbUpdateConcurrencyException)
 			{
-				if (!_context.Hotel.Any(e => e.IdHotel == id))
+				if (!_context.Hotel.Any(e => e.IdUtilizador == id))
 				{
 					return NotFound();
 				}

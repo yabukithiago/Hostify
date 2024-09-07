@@ -21,70 +21,6 @@ namespace Hostify.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Hostify.Models.Hospede", b =>
-                {
-                    b.Property<int>("IdHospede")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdHospede"));
-
-                    b.Property<int>("IdUtilizador")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("NameUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TypeUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UsernameUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("IdHospede");
-
-                    b.ToTable("Hospede");
-                });
-
-            modelBuilder.Entity("Hostify.Models.Hotel", b =>
-                {
-                    b.Property<int>("IdHotel")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdHotel"));
-
-                    b.Property<int>("IdUtilizador")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("NameUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TypeUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UsernameUtilizador")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("IdHotel");
-
-                    b.ToTable("Hotel");
-                });
-
             modelBuilder.Entity("Hostify.Models.Quarto", b =>
                 {
                     b.Property<int>("IdQuarto")
@@ -155,6 +91,58 @@ namespace Hostify.Migrations
                     b.HasKey("IdReserva");
 
                     b.ToTable("Reserva");
+                });
+
+            modelBuilder.Entity("Hostify.Models.Utilizador", b =>
+                {
+                    b.Property<int>("IdUtilizador")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdUtilizador"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)");
+
+                    b.Property<string>("NameUtilizador")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordUtilizador")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TypeUtilizador")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UsernameUtilizador")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("IdUtilizador");
+
+                    b.ToTable("Utilizador");
+
+                    b.HasDiscriminator().HasValue("Utilizador");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Hostify.Models.Hospede", b =>
+                {
+                    b.HasBaseType("Hostify.Models.Utilizador");
+
+                    b.HasDiscriminator().HasValue("Hospede");
+                });
+
+            modelBuilder.Entity("Hostify.Models.Hotel", b =>
+                {
+                    b.HasBaseType("Hostify.Models.Utilizador");
+
+                    b.HasDiscriminator().HasValue("Hotel");
                 });
 #pragma warning restore 612, 618
         }
