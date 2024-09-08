@@ -197,7 +197,7 @@
 }
 
 .footer-copywright {
-  text-align: right !important;
+  text-align: center !important;
 }
 
 .footer-body {
@@ -210,4 +210,18 @@
   color: white !important;
   margin-top: 0.5em !important;
   margin-bottom: 0.5em !important;
+}
+
+.footer-icons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  padding: 0 !important;
+}
+
+.social-icons {
+  display: inline-block !important;
+  padding-right: 15px;
+  padding-left: 15px;
 }
