@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import { PiUserBold } from "react-icons/pi";
+import { IoBed, IoBedOutline } from "react-icons/io5";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
@@ -27,8 +28,8 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href="/" className="d-flex">
-          {/*<img src={logo} className="img-fluid logo" alt="brand" /> /* substituir pelo logo do Hostify */}
+        <Navbar.Brand href="/">
+          <IoBedOutline style={{ marginBottom: "2px", color: "#0051ff" }} /> Hostify
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"

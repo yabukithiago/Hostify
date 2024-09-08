@@ -3,6 +3,7 @@ import Preloader from "./components/Preloader/Preloader";
 import Footer from "./components/Footer/Footer";
 import Scroll from "./components/Scroll/Scroll";
 import Home from "./components/Home/Home";
+import Navbar from "./components/Navbar/Navbar";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,7 +14,6 @@ import "./style.css";
 import "./index.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 function App() {
   const [load, upadateLoad] = useState(true);
 
@@ -27,8 +27,8 @@ function App() {
 
   return (
     <Router>
-      <Preloader load={load} />
       <div className="App" id={load ? "no-scroll" : "scroll"}>
+        <Navbar />
         <Scroll />
         <Routes>
           <Route path="/" element={<Home />} />
