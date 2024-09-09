@@ -24,7 +24,7 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="footer-icons">
-              <li className="social-icons">
+              <li className="footer-routes">
               <a
                 href="/"
                 className="text-white text-decoration-none"
@@ -32,7 +32,7 @@ function Footer() {
                 rel="noopener noreferrer"
               > Home </a>
               </li>
-              <li className="social-icons">
+              <li className="footer-routes">
               <a
                 href="/"
                 className="text-white text-decoration-none"
@@ -40,7 +40,7 @@ function Footer() {
                 rel="noopener noreferrer"
               > Rooms </a>
               </li>
-              <li className="social-icons">
+              <li className="footer-routes">
               <a
                 href="/"
                 className="text-white text-decoration-none"

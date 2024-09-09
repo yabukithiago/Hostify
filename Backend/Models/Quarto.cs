@@ -12,15 +12,12 @@ namespace Hostify.Models
 		public int IdHotel { get; set; }
 
 		[Required]
-		public int QuartoNumero { get; set; }
-
-		[Required]
 		public string QuartoTipo { get; set; }
 
 		public string QuartoDescricao { get; set; }
 
-		public int QuartoAndar { get; set; }
-
+		[Required]
+		public string QuartoLocalizacao { get; set; }
 		[Required]
 		public int QuartoCapacidade { get; set; }
 

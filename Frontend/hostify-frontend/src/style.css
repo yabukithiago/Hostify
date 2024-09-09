@@ -11,7 +11,7 @@ html {
     rgba(31, 49, 214, 1)
   );
 
-  --imp-text-color: #70f070;
+  --imp-text-color: #0051ff;
 }
 
 .green {
@@ -22,9 +22,7 @@ button:focus {
   box-shadow: none !important;
 }
 
-/* --------- */
 /*  Preloader */
-/* --------- */
 #preloader {
   position: fixed;
   top: 0;
@@ -32,9 +30,9 @@ button:focus {
   width: 100%;
   height: 100%;
   z-index: 999999;
-  background-color: #051306;
+  background-color: black;
   background-image: url(./resources/pre.svg);
-  background-size: 100px;
+  background-size: 150px;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -48,10 +46,7 @@ button:focus {
   height: 100vh;
 }
 
-/* --------- */
 /* Scrollbar   */
-/* --------- */
-
 ::-webkit-scrollbar {
   width: 7px;
 }
@@ -73,9 +68,7 @@ button:focus {
   border-radius: 12px;
 }
 
-/* --------- */
 /* Navbar Section  */
-/* --------- */
 .sticky {
   background-color: #ffffffa9 !important;
   transition: all 0.3s ease-out !important;
@@ -87,7 +80,7 @@ button:focus {
   position: relative !important;
   color: #0051ff !important;
   transition: all 0.3s ease-out !important;
-  padding: 0.3rem 2rem !important;
+  padding: 0.2rem 2rem !important;
   font-size: 1.2rem !important;
 }
 
@@ -99,7 +92,7 @@ button:focus {
 
 .navbar-toggler span {
   display: block !important;
-  background-color:  #0051ff !important;
+  background-color: #0051ff !important;
   height: 4px !important;
   width: 27px !important;
   margin-top: 5px !important;
@@ -150,7 +143,8 @@ button:focus {
   }
 
   .navbar-nav .nav-item {
-    margin-left: 0 !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
   }
 
   .navbar-nav .nav-item a::after {
@@ -211,10 +205,7 @@ button:focus {
   width: 100%;
 }
 
-/* --------- */
 /* Home section */
-/* --------- */
-
 #tsparticles {
   position: fixed !important;
   background-repeat: no-repeat !important;
@@ -284,27 +275,37 @@ button:focus {
   background-position: top center;
   background-repeat: no-repeat;
   color: white;
-  padding-bottom: 70px !important;
-  padding-top: 70px !important;
+  padding-bottom: 200px !important;
+  padding-top: 200px !important;
 }
 
-.home-about-description {
+.home-welcome {
   color: white !important;
-  padding-top: 100px !important;
-  padding-bottom: 20px !important;
   text-align: center;
 }
 
-.home-about-body {
+.home-rooms {
+  display: flex !important;
+  justify-content: center !important;
+  padding-top: 50px !important;
+  text-align: center !important;
   padding-top: 50px;
   font-size: 1.2em !important;
-  text-align: left;
 }
 
-.home-about-social {
+.home-search {
+  display: flex !important;
   text-align: center !important;
-  padding-top: 25px;
+  justify-content: center;
   color: white !important;
+}
+
+.search-input {
+  margin-right: 15px;
+}
+
+.search-button {
+  margin-left: 15px;
 }
 
 .home-about-social-links {
@@ -353,19 +354,17 @@ button:focus {
   text-shadow: 0 0 2px #209e31;
 }
 
-.social-icons {
-  display: inline-block !important;
-  padding-right: 15px;
-  padding-left: 15px;
+/* Login */
+.login-container {
+  height: 100vh;
 }
 
-.icon-colour {
-  color: #0c860c !important;
+.login-form {
+  max-width: 400px;
+  width: 100%;
 }
 
-/* --------- */
 /* Footer */
-/* --------- */
 .footer {
   background-color: rgb(10, 4, 22);
   bottom: 0 !important;
@@ -378,6 +377,7 @@ button:focus {
 }
 
 .footer-body {
+  color: white !important;
   z-index: 1;
   text-align: center !important;
 }
@@ -395,9 +395,14 @@ button:focus {
   padding: 0 !important;
 }
 
-/* --------- */
+.footer-routes {
+  justify-content: center;
+  display: flex !important;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
 /* Projects */
-/* --------- */
 .project-section {
   position: relative !important;
 }
@@ -470,14 +475,14 @@ button:focus {
 
 .btn-primary {
   color: #fff !important;
-  background-color: #368643 !important;
-  border-color: #368647 !important;
+  background-color: #0051ff !important;
+  border-color: #0051ff !important;
 }
 
 .btn-primary:hover {
   color: #fff !important;
-  background-color: #3bc520d7 !important;
-  border-color: #25c520d7 !important;
+  background-color: #0051ff !important;
+  border-color: #0051ff !important;
 }
 
 .btn:focus {
@@ -492,10 +497,7 @@ button:focus {
   font-weight: 500 !important;
 }
 
-/* --------- */
 /* About */
-/* --------- */
-
 .about-section {
   position: relative !important;
   padding-top: 150px !important;

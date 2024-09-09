@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import { PiUserBold } from "react-icons/pi";
-import { IoBed, IoBedOutline } from "react-icons/io5";
+import { IoBedOutline } from "react-icons/io5";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);

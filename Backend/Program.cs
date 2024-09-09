@@ -15,6 +15,17 @@ namespace Hostify
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("AllowAllOrigins",
+					policy =>
+					{
+						policy.AllowAnyOrigin()
+							  .AllowAnyMethod()
+							  .AllowAnyHeader();
+					});
+			});
+
 			var key = Encoding.ASCII.GetBytes("SuaChaveSecretaAqui"); // Azure Key Vault ou outro local seguro.
 			builder.Services.AddAuthentication(options =>
 			{
@@ -47,6 +58,8 @@ namespace Hostify
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseCors("AllowAllOrigins");
 
 			app.UseAuthentication();
 			app.UseAuthorization();

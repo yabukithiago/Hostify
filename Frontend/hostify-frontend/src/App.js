@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Preloader from "./components/Preloader/Preloader";
+import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
 import Scroll from "./components/Scroll/Scroll";
 import Home from "./components/Home/Home";
@@ -33,7 +33,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </div>
