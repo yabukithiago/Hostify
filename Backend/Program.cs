@@ -58,7 +58,7 @@ namespace Hostify
 			}
 
 			app.UseHttpsRedirection();
-
+			app.UseStaticFiles();
 			app.UseCors("AllowAllOrigins");
 
 			app.UseAuthentication();

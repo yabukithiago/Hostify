@@ -3,25 +3,29 @@ import { Input } from "../Button/Input";
 import { Button } from "../Button/Button";
 import Preloader from "../Preloader/Preloader";
 import { Container, Row, Col } from "react-bootstrap";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../Card/Card";
+import { CardContent, CardFooter, CardHeader, CardTitle } from "../Card/Card";
 import { FaMapMarkedAlt, FaSearch } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa6";
 
 function Home() {
   const [featuredRooms, setFeaturedRooms] = useState([]);
   const [load, upadateLoad] = useState(true);
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
   useEffect(() => {
     async function fetchRooms() {
       try {
         const response = await fetch("https://localhost:7244/api/Quarto");
         const data = await response.json();
-        setFeaturedRooms(data);
+        const shuffledRooms = shuffleArray(data);
+        setFeaturedRooms(shuffledRooms);
       } catch (error) {
         console.error("Error fetching rooms:", error);
       } finally {
@@ -63,46 +67,43 @@ function Home() {
           </Col>
         </Row>
       </Container>
-      <Container className="home-rooms">
-        <Row>
-          <Col md={12}>
-            <h2>Featured Rooms</h2>
-            <div className="rooms-container">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {featuredRooms.length > 0 ? (
-                  featuredRooms.map((room) => (
-                    <Card key={room.idQuarto}>
-                      <CardHeader className="p-0">
-                        <img
-                          src={room.image}
-                          alt={room.title}
-                          className="w-full h-48 object-cover"
-                        />
-                      </CardHeader>
-                      <CardContent className="p-4">
-                        <CardTitle>{room.quartoTipo}</CardTitle>
 
-                        <p className="text-gray-600 flex items-center mt-2">
-                          <FaMapMarkedAlt className="h-4 w-4 mr-1" />
-                          {room.quartoLocalizacao}
-                        </p>
-                        <p className="text-gray-600">{room.quartoDescricao}</p>
-                      </CardContent>
-                      <CardFooter className="p-4 flex items-center justify-between">
-                        <span className="text-lg font-bold">
-                          ${room.quartoDiaria}/night
-                        </span>
-                        <Button variant="outline">View Details</Button>
-                      </CardFooter>
-                    </Card>
-                  ))
-                ) : (
-                  <p>No rooms available at the moment.</p>
-                )}
-              </div>
+      <h2>Featured Rooms</h2>
+
+      <Container className="home-room-section">
+        {featuredRooms.length > 0 ? (
+          featuredRooms.map((room) => (
+            <div className="room-card" key={room.idQuarto}>
+              <CardHeader>
+                <img
+                  src={`https://localhost:7244${room.quartoImagem}`}
+                  alt={room.title}
+                  className="room-image"
+                />
+              </CardHeader>
+              <CardContent className="room-content">
+                <CardTitle>{room.quartoTipo}</CardTitle>
+                <p className="text-gray-600">
+                  <FaUsers className="h-4 w-4 mr-1" /> &nbsp;
+                  {room.quartoCapacidade}
+                </p>
+                <p className="text-gray-600">{room.quartoDescricao}</p>
+                <p className="text-gray-600 flex items-center mt-2">
+                  <FaMapMarkedAlt className="h-4 w-4 mr-1" />
+                  &nbsp;{room.quartoLocalizacao}
+                </p>
+              </CardContent>
+              <CardFooter className="room-footer">
+                <span className="text-lg font-bold">
+                  ${room.quartoDiaria}/night
+                </span>
+                <Button className="btn btn-primary">View Details</Button>
+              </CardFooter>
             </div>
-          </Col>
-        </Row>
+          ))
+        ) : (
+          <p>No rooms available at the moment.</p>
+        )}
       </Container>
     </>
   );

@@ -1,6 +1,7 @@
 ﻿using Hostify.Data;
 using Hostify.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hostify.Controllers
@@ -10,6 +11,7 @@ namespace Hostify.Controllers
 	public class QuartoController : ControllerBase
 	{
 		private readonly AppDbContext _context;
+		private readonly string _imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
 
 		public QuartoController(AppDbContext _context)
 		{
@@ -90,6 +92,39 @@ namespace Hostify.Controllers
 			await _context.SaveChangesAsync();
 
 			return quarto;
+		}
+
+		// Endpoint para fazer upload da imagem
+		[HttpPost("{id}/upload-image")]
+		public async Task<IActionResult> UploadImage(int id, IFormFile file)
+		{
+			if (file == null || file.Length == 0)
+			{
+				return BadRequest("No file uploaded.");
+			}
+
+			var quarto = await _context.Quarto.FindAsync(id);
+			if (quarto == null)
+			{
+				return NotFound();
+			}
+			
+			if (!Directory.Exists(_imageFolderPath))
+			{
+				Directory.CreateDirectory(_imageFolderPath);
+			}
+
+			var filePath = Path.Combine(_imageFolderPath, file.FileName);
+			using (var stream = new FileStream(filePath, FileMode.Create))
+			{
+				await file.CopyToAsync(stream);
+			}
+
+			quarto.QuartoImagem = $"/images/{file.FileName}";
+			_context.Quarto.Update(quarto);
+			await _context.SaveChangesAsync();
+
+			return Ok(new { quarto.QuartoImagem });
 		}
 	}
 }

@@ -13,15 +13,15 @@ namespace Hostify.Models
 
 		[Required]
 		public string QuartoTipo { get; set; }
-
+		[Required]
 		public string QuartoDescricao { get; set; }
+		[Required]
+		public int QuartoCapacidade { get; set; }
+		[Required]
+		public decimal QuartoDiaria { get; set; }
 
 		[Required]
 		public string QuartoLocalizacao { get; set; }
-		[Required]
-		public int QuartoCapacidade { get; set; }
-
-		[Required]
-		public decimal QuartoDiaria { get; set; }
+		public string QuartoImagem { get; set; }
 	}
 }
