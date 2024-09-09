@@ -3,6 +3,7 @@ import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
 import Scroll from "./components/Scroll/Scroll";
 import Home from "./components/Home/Home";
+import Room from "./components/Room/Room";
 import Navbar from "./components/Navbar/Navbar";
 import {
   BrowserRouter as Router,
@@ -34,6 +35,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/room/:id" element={<Room />} />
         </Routes>
         <Footer />
       </div>

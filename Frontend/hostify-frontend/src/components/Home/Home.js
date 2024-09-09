@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Input } from "../Button/Input";
 import { Button } from "../Button/Button";
 import Preloader from "../Preloader/Preloader";
 import { Container, Row, Col } from "react-bootstrap";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "../Card/Card";
-import { FaMapMarkedAlt, FaSearch } from "react-icons/fa";
+import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa6";
 
 function Home() {
   const [featuredRooms, setFeaturedRooms] = useState([]);
-  const [load, upadateLoad] = useState(true);
+  const [load, updateLoad] = useState(true);
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -29,7 +30,7 @@ function Home() {
       } catch (error) {
         console.error("Error fetching rooms:", error);
       } finally {
-        upadateLoad(false);
+        updateLoad(false);
       }
     }
 
@@ -62,7 +63,7 @@ function Home() {
             />
             <Button className="search-button btn btn-primary">
               <FaSearch />
-              Search Rooms
+              &nbsp; Search Rooms
             </Button>
           </Col>
         </Row>
@@ -89,7 +90,7 @@ function Home() {
                 </p>
                 <p className="text-gray-600">{room.quartoDescricao}</p>
                 <p className="text-gray-600 flex items-center mt-2">
-                  <FaMapMarkedAlt className="h-4 w-4 mr-1" />
+                  <FaMapMarkerAlt className="h-4 w-4 mr-1" />
                   &nbsp;{room.quartoLocalizacao}
                 </p>
               </CardContent>
@@ -97,7 +98,9 @@ function Home() {
                 <span className="text-lg font-bold">
                   ${room.quartoDiaria}/night
                 </span>
-                <Button className="btn btn-primary">View Details</Button>
+                <Link to={`/room/${room.idQuarto}`}>
+                  <Button className="btn btn-primary">View Details</Button>
+                </Link>
               </CardFooter>
             </div>
           ))
