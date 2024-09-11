@@ -10,7 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
-  const { isAuthenticated, userName, logout } = useAuth();
+  const { isAuthenticated, name, logout } = useAuth();
 
   function scrollHandler() {
     if (window.scrollY >= 20) {
@@ -39,11 +39,7 @@ function NavBar() {
           onClick={() => {
             updateExpanded(expand ? false : "expanded");
           }}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </Navbar.Toggle>
+        />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
             {isAuthenticated ? (
@@ -52,14 +48,21 @@ function NavBar() {
                   <Nav.Link
                     as={Link}
                     to="/profile"
-                    onAbort={() => updateExpanded(false)}
+                    onClick={() => updateExpanded(false)}
                   >
                     <PiUserBold style={{ marginBottom: "2px" }} />
-                    {userName}
+                    {name}
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link onClick={logout}>Logout</Nav.Link>
+                  <Nav.Link
+                    onClick={() => {
+                      logout();
+                      updateExpanded(false);
+                    }}
+                  >
+                    Logout
+                  </Nav.Link>
                 </Nav.Item>
               </>
             ) : (
@@ -67,7 +70,7 @@ function NavBar() {
                 <Nav.Link
                   as={Link}
                   to="/login"
-                  onAbort={() => updateExpanded(false)}
+                  onClick={() => updateExpanded(false)}
                 >
                   <PiUserBold style={{ marginBottom: "2px" }} /> Login
                 </Nav.Link>
