@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Container, Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     try {
@@ -18,39 +22,42 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
+        login(data.userName);
+        navigate("/dashboard");
       } else {
         const errorData = await response.json();
-        console.log("Login error:", errorData.error);
+        console.error("Login error:", errorData.error);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    }
   };
 
-  const handleSignUp = (userType) => {
-    const apiEndpoint = userType === 'Hospede' ? '/api/Hospede' : '/api/Hotel';
+  const handleSignUp = async (userType) => {
+    try {
+      const apiEndpoint = userType === 'Hospede' ? '/api/Hospede' : '/api/Hotel';
   
-    const data = {
-      username: username,
-      password: password,
-      // outros campos que você deseja enviar para a API
-    };
-  
-    fetch(apiEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-        // Adicione lógica após o cadastro bem-sucedido, como redirecionamento
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
       });
-  };
   
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Sign Up successful:', data);
+        login();
+        navigate("/home");
+      } else {
+        const errorData = await response.json();
+        console.error('Sign Up error:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Unexpected error:', error);
+    }
+  };
 
   return (
     <Container className="login-container d-flex justify-content-center align-items-center vh-100">

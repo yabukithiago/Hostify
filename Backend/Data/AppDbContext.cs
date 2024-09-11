@@ -11,8 +11,12 @@ namespace Hostify.Data
 		public DbSet<Hotel> Hotel { get; set; }
 		public DbSet<Quarto> Quarto { get; set; }
 		public DbSet<Reserva> Reserva { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Utilizador>()
+				.HasIndex(u => u.UsernameUtilizador)
+				.IsUnique();
 			modelBuilder.Entity<Utilizador>()
 				.HasDiscriminator<string>("TypeUtilizador")
 				.HasValue<Hotel>("Hotel")

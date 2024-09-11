@@ -6,6 +6,7 @@ import Search from "./components/Search/Search";
 import Home from "./components/Home/Home";
 import Room from "./components/Room/Room";
 import Navbar from "./components/Navbar/Navbar";
+import { AuthProvider } from "./contexts/AuthContext";
 import {
   BrowserRouter as Router,
   Route,
@@ -16,6 +17,7 @@ import "./style.css";
 import "./index.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 function App() {
   const [load, upadateLoad] = useState(true);
 
@@ -28,20 +30,22 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App" id={load ? "no-scroll" : "scroll"}>
-        <Navbar />
-        <Scroll />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<Navigate to="/" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/room/:id" element={<Room />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="App" id={load ? "no-scroll" : "scroll"}>
+          <Navbar />
+          <Scroll />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/room/:id" element={<Room />} />
+            <Route path="/search" element={<Search />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

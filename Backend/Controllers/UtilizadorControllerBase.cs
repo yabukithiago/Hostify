@@ -46,6 +46,11 @@ public abstract class UtilizadorControllerBase<T> : ControllerBase where T : Uti
 	[HttpPost]
 	public async Task<ActionResult<T>> PostUtilizador(T utilizador)
 	{
+		if (await _context.Set<T>().AnyAsync(u => u.UsernameUtilizador == utilizador.UsernameUtilizador))
+		{
+			return Conflict("Já existe um utilizador com este nome de usuário.");
+		}
+
 		if (utilizador is Hotel)
 		{
 			_context.Entry(utilizador).Property("TypeUtilizador").CurrentValue = "Hotel";
