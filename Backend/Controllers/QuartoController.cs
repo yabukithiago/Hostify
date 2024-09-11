@@ -126,5 +126,57 @@ namespace Hostify.Controllers
 
 			return Ok(new { quarto.QuartoImagem });
 		}
+
+		[HttpGet("search")]
+		public async Task<IActionResult> Search(
+	[FromQuery] string query = "",
+	[FromQuery] string type = "",
+	[FromQuery] decimal? maxPrice = null,
+	[FromQuery] string location = "")
+		{
+			try
+			{
+				// Criação da query inicial sem filtros
+				var quartosQuery = _context.Quarto.AsQueryable();
+
+				// Converte todos os filtros para minúsculas
+				var lowerQuery = query.ToLower();
+				var lowerType = type.ToLower();
+				var lowerLocation = location.ToLower();
+
+				// Aplicação dos filtros dinamicamente
+				if (!string.IsNullOrEmpty(lowerQuery))
+				{
+					quartosQuery = quartosQuery.Where(q =>
+						q.QuartoTipo.ToLower().Contains(lowerQuery) ||
+						q.QuartoDescricao.ToLower().Contains(lowerQuery)
+					);
+				}
+
+				if (!string.IsNullOrEmpty(lowerType))
+				{
+					quartosQuery = quartosQuery.Where(q => q.QuartoTipo.ToLower() == lowerType);
+				}
+
+				if (maxPrice.HasValue)
+				{
+					quartosQuery = quartosQuery.Where(q => q.QuartoDiaria <= maxPrice.Value);
+				}
+
+				if (!string.IsNullOrEmpty(lowerLocation))
+				{
+					quartosQuery = quartosQuery.Where(q => q.QuartoLocalizacao.ToLower().Contains(lowerLocation));
+				}
+
+				// Execução da query com os filtros aplicados
+				var filteredQuartos = await quartosQuery.ToListAsync();
+
+				return Ok(filteredQuartos);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Internal server error: {ex.Message}");
+			}
+		}
 	}
 }

@@ -1,16 +1,51 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../Button/Input";
 import { Button } from "../Button/Button";
 import Preloader from "../Preloader/Preloader";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Collapse, Form } from "react-bootstrap";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "../Card/Card";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa6";
 
 function Home() {
+  const [filters, setFilters] = useState({
+    roomType: "",
+    maxPrice: "",
+    location: "",
+    capacity: "",
+    searchTerm: ""
+  });
+  const [showFilters, setShowFilters] = useState(false);
   const [featuredRooms, setFeaturedRooms] = useState([]);
   const [load, updateLoad] = useState(true);
+  const navigate = useNavigate();
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [name]: value
+    }));
+  };
+
+  
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    Object.keys(filters).forEach(key => {
+      if (filters[key].trim()) params.append(key, filters[key].trim());
+    });
+
+    const searchUrl = `/search?${params.toString()}`;
+    console.log("Navigating to:", searchUrl);
+    navigate(searchUrl);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -25,7 +60,10 @@ function Home() {
       try {
         const response = await fetch("https://localhost:7244/api/Quarto");
         const data = await response.json();
-        const shuffledRooms = shuffleArray(data);
+
+        const filteredRooms = data.filter((room) => room.quartoDiaria <= 200);
+        const shuffledRooms = shuffleArray(filteredRooms);
+
         setFeaturedRooms(shuffledRooms);
       } catch (error) {
         console.error("Error fetching rooms:", error);
@@ -60,13 +98,71 @@ function Home() {
               placeholder="Where are you going?"
               className="form-control me-3"
               style={{ maxWidth: "300px" }}
+              name="location"
+              value={filters.location}
+              onChange={handleFilterChange}
+              onKeyDown={handleKeyDown}
             />
-            <Button className="search-button btn btn-primary">
+            <Button
+              onClick={() => setShowFilters(!showFilters)}
+              className="btn btn-secondary"
+            >
+              Filters
+            </Button>
+            <Button
+              onClick={handleSearch}
+              className="search-button btn btn-primary"
+            >
               <FaSearch />
               &nbsp; Search Rooms
             </Button>
           </Col>
         </Row>
+        <Collapse in={showFilters}>
+          <div className="filters-menu">
+            <Row className="mt-3">
+              <Col md={4}>
+                <Form.Group>
+                  <Form.Label>Room Type</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter room type"
+                    name="roomType"
+                    value={filters.roomType}
+                    onChange={handleFilterChange}
+                    onKeyDown={handleKeyDown}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group>
+                  <Form.Label>Max Price per Night</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter max price"
+                    name="maxPrice"
+                    value={filters.maxPrice}
+                    onChange={handleFilterChange}
+                    onKeyDown={handleKeyDown}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group>
+                  <Form.Label>Capacity</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter capacity"
+                    name="capacity"
+                    value={filters.capacity}
+                    onChange={handleFilterChange}
+                    onKeyDown={handleKeyDown}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </div>
+        </Collapse>
       </Container>
 
       <h2>Featured Rooms</h2>

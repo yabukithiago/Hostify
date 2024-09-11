@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
 import Scroll from "./components/Scroll/Scroll";
+import Search from "./components/Search/Search";
 import Home from "./components/Home/Home";
 import Room from "./components/Room/Room";
 import Navbar from "./components/Navbar/Navbar";
@@ -36,6 +37,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/room/:id" element={<Room />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
         <Footer />
       </div>
