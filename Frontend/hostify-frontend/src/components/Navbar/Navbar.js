@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { PiUserBold } from "react-icons/pi";
 import { IoBedOutline } from "react-icons/io5";
@@ -10,17 +11,21 @@ import { useAuth } from "../../contexts/AuthContext";
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
-  const { isAuthenticated, name, logout } = useAuth();
+  const { user, logout } = useAuth();
 
-  function scrollHandler() {
-    if (window.scrollY >= 20) {
-      updateNavbar(true);
-    } else {
-      updateNavbar(false);
+  useEffect(() => {
+    function scrollHandler() {
+      if (window.scrollY >= 20) {
+        updateNavbar(true);
+      } else {
+        updateNavbar(false);
+      }
     }
-  }
 
-  window.addEventListener("scroll", scrollHandler);
+    window.addEventListener("scroll", scrollHandler);
+    
+    return () => window.removeEventListener("scroll", scrollHandler);
+  }, []);
 
   return (
     <Navbar
@@ -36,35 +41,28 @@ function NavBar() {
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
-          onClick={() => {
-            updateExpanded(expand ? false : "expanded");
-          }}
+          onClick={() => updateExpanded(expand ? false : "expanded")}
         />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
-            {isAuthenticated ? (
-              <>
-                <Nav.Item>
-                  <Nav.Link
-                    as={Link}
-                    to="/profile"
-                    onClick={() => updateExpanded(false)}
-                  >
-                    <PiUserBold style={{ marginBottom: "2px" }} />
-                    {name}
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    onClick={() => {
-                      logout();
-                      updateExpanded(false);
-                    }}
-                  >
-                    Logout
-                  </Nav.Link>
-                </Nav.Item>
-              </>
+            {user ? (
+              <Dropdown align="end">
+                <Dropdown.Toggle
+                  as={Nav.Link}
+                  className="d-flex align-items-center"
+                >
+                  <PiUserBold style={{ marginBottom: "2px" }} /> {user.username}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/settings">Settings</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    logout();
+                    updateExpanded(false);
+                  }}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             ) : (
               <Nav.Item>
                 <Nav.Link

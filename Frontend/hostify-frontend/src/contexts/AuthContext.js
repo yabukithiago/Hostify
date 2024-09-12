@@ -1,28 +1,33 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [name, setName] = useState("");
+export const useAuth = () => useContext(AuthContext);
 
-  const login = (name) => {
-    setIsAuthenticated(true);
-    setName(name);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const login = (username, name) => {
+    const userInfo = { username, name };
+    setUser(userInfo);
+    localStorage.setItem("user", JSON.stringify(userInfo));
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
-    setName("");
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, name, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
+};

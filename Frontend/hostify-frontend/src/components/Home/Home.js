@@ -35,10 +35,9 @@ function Home() {
     Object.keys(filters).forEach(key => {
       if (filters[key].trim()) params.append(key, filters[key].trim());
     });
-
     const searchUrl = `/search?${params.toString()}`;
     console.log("Navigating to:", searchUrl);
-    navigate(searchUrl);
+    navigate(searchUrl);  
   };
 
   const handleKeyDown = (e) => {

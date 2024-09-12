@@ -9,7 +9,7 @@ function Footer() {
       <Row>
         <Col md="4" className="footer-copywright">
           <h3>Designed and Developed by Thiago Yabuki and Gabriel Jablonski</h3>
-          <Col classname="footer-body">
+          <Col className="footer-body">
             <br />
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>

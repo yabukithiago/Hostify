@@ -6,6 +6,7 @@ import Search from "./components/Search/Search";
 import Home from "./components/Home/Home";
 import Room from "./components/Room/Room";
 import Navbar from "./components/Navbar/Navbar";
+import Profile from "./components/Profile/Profile";
 import SignUpHospede from "./components/Login/SignUpHospede";
 import SignUpHotel from "./components/Login/SignUpHotel";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -45,6 +46,7 @@ function App() {
             <Route path="/signuphotel" element={<SignUpHotel />} />
             <Route path="/room/:id" element={<Room />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
           <Footer />
         </div>

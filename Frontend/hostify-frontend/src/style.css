@@ -176,7 +176,6 @@ button:focus {
 }
 
 .navbar-nav .nav-item {
-  position: relative;
   margin-left: 20px;
 }
 
@@ -203,6 +202,22 @@ button:focus {
 
 .navbar-nav .nav-item a:hover::after {
   width: 100%;
+}
+
+.dropdown-menu {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000; 
+}
+
+.dropdown-item {
+  color: #0051ff; 
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
 }
 
 /* Home section */

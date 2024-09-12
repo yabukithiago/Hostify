@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Form, Alert } from "react-bootstrap"; // Importando Alert para mensagens de erro
+import { Container, Button, Form, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import SignUpHospede from "./SignUpHospede";
@@ -26,16 +26,17 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
+        console.log(data.nameUtilizador); // não retorna o nome do utilizador
         setErrorMessage("");
         login(username);
         navigate("/home");
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.error || "Invalid username or password."); // Atualiza a mensagem de erro
+        setErrorMessage(errorData.error || "Invalid username or password.");
         console.error("Login error:", errorData.error);
       }
     } catch (error) {
-      setErrorMessage("Unexpected error occurred. Please try again."); // Define mensagem de erro para falhas inesperadas
+      setErrorMessage("Unexpected error occurred. Please try again.");
       console.error("Unexpected error:", error);
     }
   };
@@ -83,13 +84,13 @@ const Login = () => {
         navigate("/home");
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.error || "Sign Up failed. Please try again."); // Define mensagem de erro para falhas de registro
+        setErrorMessage(errorData.error || "Sign Up failed. Please try again.");
         console.error("Sign Up error:", errorData.error);
       }
     } catch (error) {
       setErrorMessage(
         "Unexpected error occurred during sign up. Please try again."
-      ); // Define mensagem de erro para falhas inesperadas
+      );
       console.error("Unexpected error:", error);
     }
   };
@@ -98,7 +99,6 @@ const Login = () => {
     <Container className="login-container d-flex justify-content-center align-items-center vh-100">
       <div className="login-form text-center p-4 bg-light rounded shadow">
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}{" "}
-        {/* Exibe mensagem de erro se existir */}
         {showSignUp ? (
           showSignUp === "Hospede" ? (
             <SignUpHospede onSignUp={handleSignUp} />
