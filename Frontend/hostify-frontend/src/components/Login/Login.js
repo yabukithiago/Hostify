@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Button, Form, Alert } from "react-bootstrap"; // Importando Alert para mensagens de erro
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import SignUpHospede from "./SignUpHospede";
@@ -9,6 +9,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showSignUp, setShowSignUp] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -25,57 +26,81 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
+        setErrorMessage("");
         login(username);
         navigate("/home");
       } else {
         const errorData = await response.json();
+        setErrorMessage(errorData.error || "Invalid username or password."); // Atualiza a mensagem de erro
         console.error("Login error:", errorData.error);
       }
     } catch (error) {
+      setErrorMessage("Unexpected error occurred. Please try again."); // Define mensagem de erro para falhas inesperadas
       console.error("Unexpected error:", error);
     }
   };
 
   const handleSignUp = async (userDetails) => {
     try {
-      const { usernameUtilizador, passwordUtilizador, nameUtilizador, typeUtilizador } = userDetails;
-      const apiEndpoint = typeUtilizador === 'Hospede' ? '/api/Hospede' : '/api/Hotel';
+      const {
+        usernameUtilizador,
+        passwordUtilizador,
+        nameUtilizador,
+        typeUtilizador,
+      } = userDetails;
+      const apiEndpoint =
+        typeUtilizador === "Hospede" ? "/api/Hospede" : "/api/Hotel";
 
-      const checkResponse = await fetch(`/api/CheckUserExists?username=${usernameUtilizador}`);
+      const checkResponse = await fetch(
+        `/api/CheckUserExists?username=${usernameUtilizador}`
+      );
       const userExists = await checkResponse.json();
-      
+
       if (userExists) {
-        console.error('Username already exists');
+        setErrorMessage("Username already exists");
         return;
       }
 
       const response = await fetch(apiEndpoint, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idUtilizador: 0, usernameUtilizador, passwordUtilizador, nameUtilizador, typeUtilizador }),
+        body: JSON.stringify({
+          idUtilizador: 0,
+          usernameUtilizador,
+          passwordUtilizador,
+          nameUtilizador,
+          typeUtilizador,
+        }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Sign Up successful:', data);
+        console.log("Sign Up successful:", data);
+        setErrorMessage("");
         login();
         navigate("/home");
       } else {
         const errorData = await response.json();
-        console.error('Sign Up error:', errorData.error);
+        setErrorMessage(errorData.error || "Sign Up failed. Please try again."); // Define mensagem de erro para falhas de registro
+        console.error("Sign Up error:", errorData.error);
       }
     } catch (error) {
-      console.error('Unexpected error:', error);
+      setErrorMessage(
+        "Unexpected error occurred during sign up. Please try again."
+      ); // Define mensagem de erro para falhas inesperadas
+      console.error("Unexpected error:", error);
     }
   };
 
   return (
     <Container className="login-container d-flex justify-content-center align-items-center vh-100">
       <div className="login-form text-center p-4 bg-light rounded shadow">
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}{" "}
+        {/* Exibe mensagem de erro se existir */}
         {showSignUp ? (
-          showSignUp === 'Hospede' ? (
+          showSignUp === "Hospede" ? (
             <SignUpHospede onSignUp={handleSignUp} />
           ) : (
             <SignUpHotel onSignUp={handleSignUp} />

@@ -37,7 +37,7 @@ function Search() {
             (!searchTerm || roomType.includes(searchTerm) || roomLocation.includes(searchTerm) || roomDescription.includes(searchTerm)) &&
             (!type || roomType.includes(type)) &&
             (!searchLocation || roomLocation.includes(searchLocation)) &&
-            (!maxPrice || room.quartoDiaria <= maxPrice) && (!capacity || room.quartoCapacidade <= capacity)
+            (!maxPrice || room.quartoDiaria <= maxPrice) && (!capacity || room.quartoCapacidade === parseInt(capacity))
           );
         });
 

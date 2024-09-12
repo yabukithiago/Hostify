@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const SignUpHospede = ({ onSignUp }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async () => {
@@ -28,11 +29,16 @@ const SignUpHospede = ({ onSignUp }) => {
       if (response.ok) {
         const data = JSON.parse(responseText);
         console.log("Sign Up successful:", data);
+        setErrorMessage("");
         navigate("/login");
+      } else if (response.status === 409) {
+        setErrorMessage("Username already exists. Please choose another one.");
       } else {
+        setErrorMessage("Sign Up failed. Please try again.");
         console.error("Sign Up error:", responseText);
       }
     } catch (error) {
+      setErrorMessage("Unexpected error occurred. Please try again."); // Exibe mensagem de erro inesperado
       console.error("Unexpected error:", error);
     }
   };
@@ -40,6 +46,7 @@ const SignUpHospede = ({ onSignUp }) => {
   return (
     <div>
       <h2>Sign Up as Hospede</h2>
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <Form>
         <Form.Group controlId="formName" className="mb-3">
           <Form.Control

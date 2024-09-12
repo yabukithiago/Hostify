@@ -1,19 +1,51 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const SignUpHotel = ({ onSignUp }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    const userId = 0;
-    onSignUp({ idUtilizador: userId, usernameUtilizador: username, passwordUtilizador: password, nameUtilizador: name, typeUtilizador: "Hotel" });
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("https://localhost:7244/api/Hotel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idUtilizador: 0,
+          usernameUtilizador: username,
+          passwordUtilizador: password,
+          nameUtilizador: name,
+          typeUtilizador: "Hotel",
+        }),
+      });
+
+      const responseText = await response.text();
+
+      if (response.ok) {
+        const data = JSON.parse(responseText);
+        console.log("Sign Up successful:", data);
+        setErrorMessage("");
+        navigate("/login");
+      } else if (response.status === 409) {
+        setErrorMessage("Username already exists. Please choose another one.");
+      } else {
+        setErrorMessage("Sign Up failed. Please try again.");
+      }
+    } catch (error) {
+      setErrorMessage("Unexpected error occurred. Please try again.");
+    }
   };
-
+  
   return (
     <div>
       <h2>Sign Up as Hotel</h2>
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <Form>
         <Form.Group controlId="formName" className="mb-3">
           <Form.Control
@@ -41,11 +73,7 @@ const SignUpHotel = ({ onSignUp }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button
-          variant="primary"
-          onClick={handleSubmit}
-          className="w-100"
-        >
+        <Button variant="primary" onClick={handleSubmit} className="w-100">
           Sign Up
         </Button>
       </Form>

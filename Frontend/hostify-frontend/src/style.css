@@ -363,44 +363,6 @@ button:focus {
   width: 100%;
 }
 
-/* Footer */
-.footer {
-  background-color: rgb(10, 4, 22);
-  bottom: 0 !important;
-  padding-top: 10px !important;
-  padding-bottom: 10px !important ;
-}
-
-.footer-copywright {
-  text-align: center !important;
-}
-
-.footer-body {
-  color: white !important;
-  z-index: 1;
-  text-align: center !important;
-}
-
-.footer h3 {
-  font-size: 0.75em !important;
-  color: white !important;
-  margin-top: 0.5em !important;
-  margin-bottom: 0.5em !important;
-}
-
-.footer-icons {
-  margin-top: 0.5em !important;
-  margin-bottom: 0.5em !important;
-  padding: 0 !important;
-}
-
-.footer-routes {
-  justify-content: center;
-  display: flex !important;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
 /* Rooms */
 .home-room-section {
   display: grid;
@@ -464,67 +426,40 @@ button:focus {
   box-shadow: none !important;
 }
 
-/* About */
-.about-section {
-  position: relative !important;
-  padding-top: 150px !important;
-  padding-bottom: 30px !important;
-  background-image: var(--section-background-color) !important;
-  color: white !important;
+/* Footer */
+.footer {
+  background-color: rgb(10, 4, 22);
+  bottom: 0 !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important ;
 }
 
-.about-activity {
-  list-style: none !important;
-  text-align: left !important;
-  padding-left: 1px !important;
-}
-
-@media (max-width: 767px) {
-  .about-section {
-    padding: 20px;
-  }
-
-  .about-img {
-    text-align: center;
-    padding-top: 20px;
-  }
-}
-
-.tech-icons {
-  font-size: 4.5em !important;
-  margin: 15px !important;
-  padding: 10px !important;
-  opacity: 0.93 !important;
-  border: 1.7px solid rgba(145, 230, 137, 0.637) !important;
-  vertical-align: middle !important;
+.footer-copywright {
   text-align: center !important;
-  border-radius: 5px !important;
-  display: table !important;
-  box-shadow: 4px 5px 4px 3px rgba(18, 168, 4, 0.137) !important;
-  overflow: hidden !important;
-  transition: all 0.4s ease 0s !important;
 }
 
-@media (max-width: 767px) {
-  .tech-icons {
-    font-size: 3em !important;
-    margin: 10px !important;
-  }
-}
-
-.tech-icons:hover {
-  transform: scale(1.05) !important;
-  overflow: hidden !important;
-  border: 2.2px solid rgba(255, 255, 255, 0.883) !important;
-}
-
-.tech-icon-images {
-  padding: 20px !important;
-  line-height: 1.6 !important;
-}
-
-.quote-card-view {
-  border: none !important;
+.footer-body {
   color: white !important;
-  background-color: transparent !important;
+  z-index: 1;
+  text-align: center !important;
+}
+
+.footer h3 {
+  font-size: 0.75em !important;
+  color: white !important;
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+.footer-icons {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  padding: 0 !important;
+}
+
+.footer-routes {
+  justify-content: center;
+  display: flex !important;
+  padding-right: 15px;
+  padding-left: 15px;
 }
