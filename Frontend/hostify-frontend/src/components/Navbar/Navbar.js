@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { PiUserBold } from "react-icons/pi";
 import { IoBedOutline } from "react-icons/io5";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     function scrollHandler() {
@@ -56,10 +58,11 @@ function NavBar() {
 
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings">Settings</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/reservation">Reservations</Dropdown.Item>
                   <Dropdown.Item onClick={() => {
                     logout();
                     updateExpanded(false);
+                    navigate("/");
                   }}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

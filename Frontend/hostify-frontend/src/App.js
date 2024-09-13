@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Room from "./components/Room/Room";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
+import Reservation from "./components/Profile/Reservation";
 import SignUpHospede from "./components/Login/SignUpHospede";
 import SignUpHotel from "./components/Login/SignUpHotel";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -20,6 +21,7 @@ import "./style.css";
 import "./index.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
   const [load, upadateLoad] = useState(true);
@@ -47,6 +49,7 @@ function App() {
             <Route path="/room/:id" element={<Room />} />
             <Route path="/search" element={<Search />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/reservation" element={<Reservation />} />
           </Routes>
           <Footer />
         </div>
