@@ -19,5 +19,9 @@ namespace Hostify.Models
 
 		[Required]
 		public string TypeUtilizador { get; set; }
+		[Required]
+		public string EmailUtilizador { get; set; }
+		[Required]
+		public string PhoneUtilizador { get; set; }
 	}
 }

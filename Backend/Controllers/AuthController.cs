@@ -44,7 +44,13 @@ namespace Hostify.Controllers
 			var tokenHandler = new JwtSecurityTokenHandler();
 			var tokenDescriptor = new SecurityTokenDescriptor
 			{
-				Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, login.Username) }),
+				Subject = new ClaimsIdentity(new[]
+				{
+					new Claim(ClaimTypes.Role, user.IdUtilizador.ToString()),
+					new Claim(ClaimTypes.Name, login.Username),
+					new Claim(ClaimTypes.NameIdentifier, user.NameUtilizador.ToString()),
+					new Claim("Type", user.TypeUtilizador.ToString())					
+				}),
 				Expires = DateTime.UtcNow.AddHours(1),
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 			};

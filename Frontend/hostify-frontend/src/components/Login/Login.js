@@ -26,7 +26,9 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
-        console.log(data.nameUtilizador); // não retorna o nome do utilizador
+
+        const token = data.token;
+        localStorage.setItem("authToken", token);
         setErrorMessage("");
         login(username);
         navigate("/home");
@@ -136,14 +138,20 @@ const Login = () => {
               <div className="d-flex justify-content-between">
                 <Button
                   variant="secondary"
-                  onClick={() => setShowSignUp("Hospede")}
+                  onClick={() => {
+                    setShowSignUp("Hospede");
+                    navigate("/signuphospede");
+                  }}
                   className="w-45"
                 >
                   Sign Up as Hospede
                 </Button>
                 <Button
                   variant="secondary"
-                  onClick={() => setShowSignUp("Hotel")}
+                  onClick={() => {
+                    setShowSignUp("Hotel");
+                    navigate("/signuphotel");
+                  }}
                   className="w-45"
                 >
                   Sign Up as Hotel
