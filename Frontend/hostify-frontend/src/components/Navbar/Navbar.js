@@ -14,18 +14,12 @@ function NavBar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
     try {
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
       console.log("Decoded token:", decodedToken);
       setUserType(decodedToken.Type);
     } catch (e) {
       console.error("Error parsing token:", e);
-      navigate("/login");
     }
   }, [token, navigate]);
 
