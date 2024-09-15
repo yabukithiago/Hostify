@@ -13,6 +13,8 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+ 
+
   const handleLogin = async () => {
     try {
       const response = await fetch("https://localhost:7244/api/Auth/login", {
@@ -97,10 +99,16 @@ const Login = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
     <Container className="login-container d-flex justify-content-center align-items-center vh-100">
       <div className="login-form text-center p-4 bg-light rounded shadow">
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}{" "}
+        
         {showSignUp ? (
           showSignUp === "Hospede" ? (
             <SignUpHospede onSignUp={handleSignUp} />
@@ -126,15 +134,19 @@ const Login = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </Form.Group>
+              {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}{" "}
               <Button
                 variant="primary"
                 onClick={handleLogin}
+                
                 className="w-100 mb-3"
               >
                 Login
               </Button>
+              
               <div className="d-flex justify-content-between">
                 <Button
                   variant="secondary"

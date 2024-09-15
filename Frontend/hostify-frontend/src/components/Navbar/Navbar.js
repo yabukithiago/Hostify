@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Container from "react-bootstrap/Container";
-import { Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Nav, Navbar, Dropdown, Container } from "react-bootstrap";
 import { PiUserBold } from "react-icons/pi";
 import { IoBedOutline } from "react-icons/io5";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function NavBar() {
+  const token = localStorage.getItem("authToken");
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
+  const [userType, setUserType] = useState(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      console.log("Decoded token:", decodedToken);
+      setUserType(decodedToken.Type);
+    } catch (e) {
+      console.error("Error parsing token:", e);
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     function scrollHandler() {
@@ -25,7 +39,7 @@ function NavBar() {
     }
 
     window.addEventListener("scroll", scrollHandler);
-    
+
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
@@ -57,13 +71,27 @@ function NavBar() {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/reservation">Reservations</Dropdown.Item>
-                  <Dropdown.Item onClick={() => {
-                    logout();
-                    updateExpanded(false);
-                    navigate("/");
-                  }}>Logout</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/profile">
+                    Profile
+                  </Dropdown.Item>
+                  {userType === "Hospede" ? (
+                    <Dropdown.Item as={Link} to="/reservation">
+                      Reservations
+                    </Dropdown.Item>
+                  ) : (
+                    <Dropdown.Item as={Link} to="/rooms">
+                      Manage Rooms
+                    </Dropdown.Item>
+                  )}
+                  <Dropdown.Item
+                    onClick={() => {
+                      logout();
+                      updateExpanded(false);
+                      navigate("/");
+                    }}
+                  >
+                    Logout
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

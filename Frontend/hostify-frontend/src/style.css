@@ -14,7 +14,7 @@ html {
   --imp-text-color: #0051ff;
 }
 
-.green {
+.blue {
   color: var(--imp-text-color) !important;
 }
 
@@ -366,6 +366,13 @@ button:focus {
   color: #2b9e20;
   box-shadow: 0 0 5px #209e26;
   text-shadow: 0 0 2px #209e31;
+}
+
+.filters-menu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 /* Login */

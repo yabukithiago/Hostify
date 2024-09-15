@@ -14,7 +14,7 @@ function Home() {
     maxPrice: "",
     location: "",
     capacity: "",
-    searchTerm: ""
+    searchTerm: "",
   });
   const [showFilters, setShowFilters] = useState(false);
   const [featuredRooms, setFeaturedRooms] = useState([]);
@@ -23,21 +23,20 @@ function Home() {
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters(prevFilters => ({
+    setFilters((prevFilters) => ({
       ...prevFilters,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  
   const handleSearch = () => {
     const params = new URLSearchParams();
-    Object.keys(filters).forEach(key => {
+    Object.keys(filters).forEach((key) => {
       if (filters[key].trim()) params.append(key, filters[key].trim());
     });
     const searchUrl = `/search?${params.toString()}`;
     console.log("Navigating to:", searchUrl);
-    navigate(searchUrl);  
+    navigate(searchUrl);
   };
 
   const handleKeyDown = (e) => {
@@ -202,6 +201,13 @@ function Home() {
         ) : (
           <p>No rooms available at the moment.</p>
         )}
+      </Container>
+      <h2>Quick trip planning</h2>
+      <Container>
+        <CardHeader></CardHeader>
+        <CardContent>
+          <CardTitle></CardTitle>
+        </CardContent>
       </Container>
     </>
   );

@@ -51,7 +51,6 @@ const SignUpHotel = ({ onSignUp }) => {
       <Container className="login-container d-flex justify-content-center align-items-center vh-100">
         <div className="login-form text-center p-4 bg-light rounded shadow">
           <h2>Sign Up as Hotel</h2>
-          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
           <Form>
             <Form.Group controlId="formName" className="mb-3">
               <Form.Group controlId="formEmail" className="mb-3">
@@ -72,12 +71,13 @@ const SignUpHotel = ({ onSignUp }) => {
                   className="mb-2"
                 />
               </Form.Group>
-              <Form.Group controlId="formPassword" className="mb-4">
+              <Form.Group controlId="formPassword" className="mb-3">
                 <Form.Control
                   type="password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="mb-2"
                 />
               </Form.Group>
               <Form.Control
@@ -88,14 +88,16 @@ const SignUpHotel = ({ onSignUp }) => {
                 className="mb-2"
               />
             </Form.Group>
-            <Form.Group controlId="formPhone" className="mb-4">
+            <Form.Group controlId="formPhone" className="mb-3">
               <Form.Control
                 type="text"
                 placeholder="Phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                className="mb-2"
               />
             </Form.Group>
+            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
             <Button variant="primary" onClick={handleSubmit} className="w-100">
               Sign Up
             </Button>
