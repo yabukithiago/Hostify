@@ -10,6 +10,7 @@ import Profile from "./components/Profile/Profile";
 import Reservation from "./components/Profile/Reservation";
 import SignUpHospede from "./components/Login/SignUpHospede";
 import SignUpHotel from "./components/Login/SignUpHotel";
+import NewRoom from "./components/Room/NewRoom";
 import { AuthProvider } from "./contexts/AuthContext";
 import {
   BrowserRouter as Router,
@@ -47,6 +48,7 @@ function App() {
             <Route path="/signuphospede" element={<SignUpHospede />} />
             <Route path="/signuphotel" element={<SignUpHotel />} />
             <Route path="/room/:id" element={<Room />} />
+            <Route path="/new-room" element={<NewRoom />} />
             <Route path="/search" element={<Search />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/reservation" element={<Reservation />} />

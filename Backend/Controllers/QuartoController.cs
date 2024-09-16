@@ -40,13 +40,14 @@ namespace Hostify.Controllers
 
 		//Cria um quarto
 		[HttpPost]
-		public async Task<ActionResult<Hotel>> PostQuarto(Quarto quarto)
+		public async Task<ActionResult<Quarto>> PostQuarto([FromBody] Quarto quarto)
 		{
 			_context.Quarto.Add(quarto);
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction(nameof(GetQuarto), new { id = quarto.IdQuarto }, quarto);
 		}
+
 
 		//Atualiza um quarto
 		[HttpPut("{id}")]
@@ -108,7 +109,7 @@ namespace Hostify.Controllers
 			{
 				return NotFound();
 			}
-			
+
 			if (!Directory.Exists(_imageFolderPath))
 			{
 				Directory.CreateDirectory(_imageFolderPath);
@@ -126,6 +127,7 @@ namespace Hostify.Controllers
 
 			return Ok(new { quarto.QuartoImagem });
 		}
+
 
 		[HttpGet("search")]
 		public async Task<IActionResult> Search(

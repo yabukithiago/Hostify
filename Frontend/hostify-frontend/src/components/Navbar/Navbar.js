@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Navbar, Dropdown, Container } from "react-bootstrap";
+import { Nav, Navbar, Dropdown, Container, NavItem } from "react-bootstrap";
 import { PiUserBold } from "react-icons/pi";
 import { IoBedOutline } from "react-icons/io5";
 import { useAuth } from "../../contexts/AuthContext";
@@ -37,6 +37,102 @@ function NavBar() {
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
+  const commonNav = (
+    <>
+      <Navbar.Brand href="/">
+        <IoBedOutline style={{ marginBottom: "2px", color: "#0051ff" }} />{" "}
+        Hostify
+      </Navbar.Brand>
+      <Navbar.Toggle
+        aria-controls="responsive-navbar-nav"
+        onClick={() => updateExpanded(expand ? false : "expanded")}
+      />
+    </>
+  );
+
+  const hospedeNav = (
+    <Nav className="ms-auto" defaultActiveKey="#home">
+      <NavItem>
+        <Nav.Link as={Link} to="/explore">
+          Explore
+        </Nav.Link>
+      </NavItem>
+      <Dropdown align="end">
+        <Dropdown.Toggle as={Nav.Link} className="d-flex align-items-center">
+          <PiUserBold style={{ marginBottom: "2px" }} /> {user?.username}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item as={Link} to="/profile">
+            Profile
+          </Dropdown.Item>
+          <Dropdown.Item as={Link} to="/reservation">
+            Reservations
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => {
+              logout();
+              updateExpanded(false);
+              navigate("/");
+            }}
+          >
+            Logout
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Nav>
+  );
+
+  const hotelNav = (
+    <Nav className="ms-auto" defaultActiveKey="#home">
+      <NavItem>
+        <Nav.Link as={Link} to="/new-room">
+          Add your room
+        </Nav.Link>
+      </NavItem>
+      <Dropdown align="end">
+        <Dropdown.Toggle as={Nav.Link} className="d-flex align-items-center">
+          <PiUserBold style={{ marginBottom: "2px" }} /> {user?.username}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item as={Link} to="/profile">
+            Profile
+          </Dropdown.Item>
+          <Dropdown.Item as={Link} to="/hotelrooms">
+            Manage Rooms
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => {
+              logout();
+              updateExpanded(false);
+              navigate("/");
+            }}
+          >
+            Logout
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Nav>
+  );
+
+  const guestNav = (
+    <Nav className="ms-auto">
+      <Nav.Item>
+        <Nav.Link as={Link} to="/explore">
+          Explore
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link
+          as={Link}
+          to="/login"
+          onClick={() => updateExpanded(false)}
+        >
+          <PiUserBold style={{ marginBottom: "2px" }} /> Login
+        </Nav.Link>
+      </Nav.Item>
+    </Nav>
+  );
+
   return (
     <Navbar
       expanded={expand}
@@ -45,61 +141,13 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href="/">
-          <IoBedOutline style={{ marginBottom: "2px", color: "#0051ff" }} />{" "}
-          Hostify
-        </Navbar.Brand>
-        <Navbar.Toggle
-          aria-controls="responsive-navbar-nav"
-          onClick={() => updateExpanded(expand ? false : "expanded")}
-        />
+        {commonNav}
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ms-auto" defaultActiveKey="#home">
-            {user ? (
-              <Dropdown align="end">
-                <Dropdown.Toggle
-                  as={Nav.Link}
-                  className="d-flex align-items-center"
-                >
-                  <PiUserBold style={{ marginBottom: "2px" }} /> {user.username}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/profile">
-                    Profile
-                  </Dropdown.Item>
-                  {userType === "Hospede" ? (
-                    <Dropdown.Item as={Link} to="/reservation">
-                      Reservations
-                    </Dropdown.Item>
-                  ) : (
-                    <Dropdown.Item as={Link} to="/rooms">
-                      Manage Rooms
-                    </Dropdown.Item>
-                  )}
-                  <Dropdown.Item
-                    onClick={() => {
-                      logout();
-                      updateExpanded(false);
-                      navigate("/");
-                    }}
-                  >
-                    Logout
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            ) : (
-              <Nav.Item>
-                <Nav.Link
-                  as={Link}
-                  to="/login"
-                  onClick={() => updateExpanded(false)}
-                >
-                  <PiUserBold style={{ marginBottom: "2px" }} /> Login
-                </Nav.Link>
-              </Nav.Item>
-            )}
-          </Nav>
+          {user ? (
+            userType === "Hospede" ? hospedeNav : hotelNav
+          ) : (
+            guestNav
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
