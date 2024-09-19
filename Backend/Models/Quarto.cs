@@ -23,5 +23,6 @@ namespace Hostify.Models
 		[Required]
 		public string QuartoLocalizacao { get; set; }
 		public string QuartoImagem { get; set; }
+		public bool QuartoDisponivel { get; set; }
 	}
 }

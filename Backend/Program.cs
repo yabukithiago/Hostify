@@ -15,6 +15,8 @@ namespace Hostify
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+			builder.Services.AddScoped<QuartoService>();
+
 			builder.Services.AddCors(options =>
 			{
 				options.AddPolicy("AllowAllOrigins",
