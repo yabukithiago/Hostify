@@ -39,6 +39,7 @@ const NewRoom = ({ onSignUp }) => {
           quartoDiaria: price,
           quartoLocalizacao: location,
           quartoImagem: "",
+          quartoDisponivel: true,
         }),
       });
   

@@ -9,7 +9,7 @@ namespace Hostify.Models
 		public int IdQuarto { get; set; }
 
 		[Required]
-		public int IdHotel { get; set; }
+		public Hotel Hotel { get; set; }
 
 		[Required]
 		public string QuartoTipo { get; set; }

@@ -8,16 +8,13 @@ namespace Hostify.Models
 		[Key]
 		public int IdReserva { get; set; }
 		[Required]
-		public int IdHotel { get; set; }
+		public Hotel Hotel { get; set; }
 		[Required]
-		public int IdHospede { get; set; }
+		public Hospede Hospede { get; set; }
 		[Required]
-		public int IdQuarto { get; set; }
-		public int QuartoNumero { get; set; }
+		public Quarto Quarto { get; set; }
 		public string TypeReserva { get; set; }
 		public string DescriptionReserva { get; set; }
-		public decimal PerNight { get; set; }
-		public decimal TotalCost { get; set; }
 		public DateTime InicioReserva { get; set; }
 		public DateTime FimReserva { get; set; }
 	}

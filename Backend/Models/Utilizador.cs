@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hostify.Models
@@ -12,6 +12,7 @@ namespace Hostify.Models
 		public string UsernameUtilizador { get; set; }
 
 		[Required]
+		[JsonIgnore]
 		public string PasswordUtilizador { get; set; }
 
 		[Required]

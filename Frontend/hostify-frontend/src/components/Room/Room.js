@@ -1,8 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../Card/Card';
-import { FaMapMarkedAlt, FaUsers, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../Card/Card";
+import {
+  FaMapMarkedAlt,
+  FaUsers,
+  FaPhone,
+  FaEnvelope,
+  FaList,
+} from "react-icons/fa";
 
 function Room() {
   const { id } = useParams();
@@ -51,18 +63,21 @@ function Room() {
                 <FaUsers className="h-4 w-4 mr-1" /> &nbsp;
                 {room.quartoCapacidade}
               </p>
-              <p className="text-gray-600">{room.quartoDescricao}</p>
+              <p className="text-gray-600">
+                <FaList className="h-4 w-4 mr-1" /> &nbsp;
+                {room.quartoDescricao}
+              </p>
               <p className="text-gray-600 flex items-center mt-2">
                 <FaMapMarkedAlt className="h-4 w-4 mr-1" />
                 &nbsp;{room.quartoLocalizacao}
               </p>
               <p className="text-gray-600">
                 <FaPhone className="h-4 w-4 mr-1" />
-                &nbsp;{room.contactNumber}
+                &nbsp;{room.hotel.phoneUtilizador}
               </p>
               <p className="text-gray-600">
                 <FaEnvelope className="h-4 w-4 mr-1" />
-                &nbsp;{room.contactEmail}
+                &nbsp;{room.hotel.emailUtilizador}
               </p>
               {/* <Row className="mt-4">
                 {room.additionalImages.map((image, index) => (

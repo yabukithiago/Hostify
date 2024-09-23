@@ -17,7 +17,7 @@ namespace Hostify
 			var quarto = _context.Quarto.FirstOrDefault(q => q.IdQuarto == idQuarto);
 			if (quarto != null && quarto.QuartoDisponivel)
 			{
-				if (!_context.Reserva.Any(r => r.IdQuarto == idQuarto &&
+				if (!_context.Reserva.Any(r => r.Quarto.IdQuarto == idQuarto &&
 						(inicioReserva < r.FimReserva && fimReserva > r.InicioReserva)))
 				{
 					quarto.QuartoDisponivel = false;
